@@ -1,5 +1,5 @@
 {
-  "name": "Level 2: The heros welcome",
+  "name": "Level 2",
   "defaults": {
     "types": "water,ground,rock,monster,queen",
     "startHealth": 10,
@@ -9,88 +9,23 @@
   "tiles": {
     "rows": {
       "0": {},
-      "1": {
-        "1": {
-          "id": 1,
-          "type": "queen"
-        }
-      },
-      "2": {
-        "0": {
-          "id": 2,
-          "type": "water"
-        },
-        "1": {
-          "id": 3,
-          "type": "water"
-        },
-        "2": {
-          "id": 4,
-          "type": "water"
-        },
-        "3": {
-          "id": 5,
-          "type": "water"
-        },
-        "4": {
-          "id": 6,
-          "type": "water"
-        },
-        "5": {
-          "id": 7,
-          "type": "water"
-        },
-        "9": {
-          "id": 13,
-          "type": "monster",
-          "movement": 1,
-          "hp": 2,
-          "initiative": 2,
-          "xp": 100
-        }
-      },
+      "1": {},
+      "2": { "5": { "id": 1, "type": "queen" } },
       "3": {},
-      "4": {
-        "7": {
-          "id": 8,
-          "type": "rock"
-        }
-      },
-      "5": {},
-      "6": {
+      "4": {},
+      "5": {
         "5": {
           "id": 666,
           "type": "hero",
           "movement": 1,
           "hp": 10,
-          "initiative": 1
+          "initiative": 2
         }
       },
-      "7": {
-        "3": {
-          "id": 9,
-          "type": "rock"
-        },
-        "8": {
-          "id": 10,
-          "type": "monster",
-          "movement": 1,
-          "hp": 2,
-          "initiative": 4,
-          "xp": 100
-        }
-      },
+      "6": {},
+      "7": {},
       "8": {},
-      "9": {
-        "0": {
-          "id": 11,
-          "type": "monster",
-          "movement": 1,
-          "hp": 2,
-          "initiative": 3,
-          "xp": 100
-        }
-      }
+      "9": {}
     }
   }
 }

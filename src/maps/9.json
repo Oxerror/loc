@@ -1,0 +1,55 @@
+{
+  "name": "Level 9",
+  "defaults": {
+    "types": "water,ground,rock,monster,queen",
+    "startHealth": 10,
+    "ysize": 10,
+    "xsize": 12
+  },
+  "tiles": {
+    "rows": {
+      "0": {},
+      "1": {
+        "1": { "id": 2, "type": "rock" },
+        "2": { "id": 2, "type": "rock" },
+        "3": { "id": 2, "type": "rock" },
+        "4": { "id": 2, "type": "rock" },
+        "5": { "id": 2, "type": "rock" },
+        "6": { "id": 2, "type": "rock" }
+      },
+      "2": { "6": { "id": 2, "type": "rock" } },
+      "3": { "6": { "id": 2, "type": "rock" } },
+      "4": {
+        "3": {
+          "id": 666,
+          "type": "hero",
+          "movement": 1,
+          "hp": 10,
+          "initiative": 2
+        },
+        "5": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        },
+        "6": { "id": 2, "type": "rock" },
+        "7": { "id": 1, "type": "queen" }
+      },
+      "5": { "6": { "id": 2, "type": "rock" } },
+      "6": { "6": { "id": 2, "type": "rock" } },
+      "7": { "6": { "id": 2, "type": "rock" } },
+      "8": {
+        "1": { "id": 2, "type": "rock" },
+        "2": { "id": 2, "type": "rock" },
+        "3": { "id": 2, "type": "rock" },
+        "4": { "id": 2, "type": "rock" },
+        "5": { "id": 2, "type": "rock" },
+        "6": { "id": 2, "type": "rock" }
+      },
+      "9": {}
+    }
+  }
+}
