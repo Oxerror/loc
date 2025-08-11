@@ -1,40 +1,60 @@
-# A coding game I coded to learn coding in a game
+# 🎮 Coding Game – Schnupperlehre @ SwissGRC
 
-This university project was created to for the course "Summer School Of Designing Serious Games". Goal of this project was to create a prototype for a serious game (https://en.wikipedia.org/wiki/Serious_game).
+This project is a fork of a university prototype originally created for the course *"Summer School Of Designing Serious Games"*. It has been adapted and extended for the **Schnupperlehre** at **SwissGRC** to explore game development and programming fundamentals in a playful and educational way.
 
-## Reality, Meaning and Play - Why this was created
-Will be added once the documentation has been written for the course
+## 🧠 Project Goal
 
-# Do you want to run this app?
-Prerequisites: A modern browser and node
+The aim of this project is to:
 
-~~Stable verison of the game can be played here: https://iocprotoype.azurewebsites.net/~~
+- Learn and apply basic coding skills.
+- Gain hands-on experience with web development tools.
 
-__no longer supported__
+## 🚀 Getting Started
 
-## Available Scripts
+### Prerequisites
+
+- A modern web browser.
+- Node.js installed on your system.
+
+### Installation & Running
 
 In the project directory, you can run:
 
-### `yarn start` or `npm start`
+```bash
+# Install dependencies
+yarn install
+# or
+npm install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Start the development server
+yarn start
+# or
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🧪 Testing
 
-### `yarn test`
+To run tests, use:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Run tests
+yarn test
+# or
+npm test
+```
 
-### `yarn build`
+## 📦 Building for Production
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To build the project for production, use:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Build for production
+yarn build
+# or
+npm build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🙌 Credits
+
+Adapted and developed by Fabian Amhof for the Schnupperlehre at SwissGRC.
+Original concept by Mike for the Summer School Of Designing Serious Games.
