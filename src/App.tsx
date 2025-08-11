@@ -6,24 +6,6 @@ import MapGrid from "./MapGrid";
 import { useState } from "react";
 import { useEffect } from "react";
 // @ts-ignore
-import themeMp3 from './sounds/theme.mp3';
-// @ts-ignore
-import stepsMp3 from './sounds/steps.wav';
-// @ts-ignore
-import hurtMp3 from './sounds/hurt.wav';
-// @ts-ignore
-import attackMp3 from './sounds/attack.wav';
-// @ts-ignore
-import enemyDieMp3 from './sounds/enemydie.wav';
-// @ts-ignore
-import enemyHurtMp3 from './sounds/enemyhurt.wav'
-// @ts-ignore
-import gameOverMp3 from './sounds/gameover.wav'
-// @ts-ignore
-import winMp3 from './sounds/win.wav'
-// @ts-ignore
-import battleMp3 from './sounds/battle.mp3'
-// @ts-ignore
 import Tutorial from "./tutorial/Tutorial";
 
 function App() {
@@ -49,8 +31,6 @@ function App() {
   const [statsOutput, setStatsOutput] = useState("");
   const [myXp, setMyXp] = useState(0);
   const [enemiesInRange, setEnemiesInRage]= useState<Entity[]>([]);
-  const [battleOst, setBattleOst] = useState(new Audio(battleMp3));
-  const [exploreOst, setExploreOst] = useState(new Audio(themeMp3));
 
 
   const baseDelay = 400; //1500 too slow
@@ -89,33 +69,12 @@ function App() {
         //gameover
         setPlaying('false');
         navigator.clipboard.writeText(editorRef!.current!.getValue())
-        playGameOverSound();
         alert("GAME OVER. Sending thy hero back to the menu. Copied the used code to clipboard");
         window.location.reload();
       }
     }
   }, [reload])
   
-  /*SOUNDS */
-  useEffect(() => {
-    if(!intro){
-      if(enemiesInRange.length < 1 || getMonsters().length < 1){
-        battleOst.pause();
-        exploreOst.volume = 0.3;
-        exploreOst.loop = true;
-        exploreOst.play();
-      }else if(battleOst.paused === true){
-        exploreOst.pause();
-        battleOst.volume= 0.4;
-        battleOst.play();
-        battleOst.loop = true;
-      }
-      setExploreOst(exploreOst);
-      setBattleOst(battleOst);
-
-    }
-  }, [intro, enemiesInRange, mapData])
-
   const calculateLevel  = (xp: number): number => {
     if(xp === 0){
       return 0;
@@ -141,50 +100,6 @@ function App() {
       output += x.type + "-"+ x.id+ "&emsp;&emsp;&emsp;&emsp;hp: " + x.props.hp +"&emsp;&emsp;&emsp;&emsp;ATP:"+x.attack+"<br/>"});
     setStatsOutput(output);
   }
-
-const playMovementSound = () =>{
-  var mvmt = new Audio(stepsMp3);
-  mvmt.volume = 0.5;
-  mvmt.play();
-}
-
-const playAttackSound = () =>{
-  var audio = new Audio(attackMp3);
-  audio.volume = 0.7;
-  audio.play();
-}
-
-const playHeroHurtSound = () =>{
-  var audio = new Audio(hurtMp3);
-  audio.volume = 0.7;
-  audio.play();
-}
-
-const playEnemyHurtSound = () =>{
-  var audio = new Audio(enemyHurtMp3);
-  audio.volume = 0.7;
-  audio.play();
-}
-
-const playEnemyDieSound = () => {
-  var audio = new Audio(enemyDieMp3);
-  audio.volume = 0.7;
-  audio.play();
-}
-
-
-const playWinSound = () => {
-  var audio = new Audio(winMp3);
-  audio.volume = 0.8;
-  audio.play();
-}
-
-const playGameOverSound = () => {
-  var audio = new Audio(gameOverMp3);
-  audio.volume = 0.9;
-  audio.play();
-}
-
 
   const setupLogger = () => {
     console.log(playConsole)
@@ -318,7 +233,6 @@ const playGameOverSound = () => {
 
   const isBlocked = (x: number, y:number) : boolean => {
     if(["queen","gem"].indexOf(mapData.tiles.rows[y+""][""+x]?.type) >= 0){
-      playWinSound();
       setMyXp(myXp as number + 300);
       setPlaying('false');
       alert("YOU WIN, received XP for completing level. Sending thy hero back to the menu. Copied the used code to clipboard");
@@ -346,7 +260,6 @@ const playGameOverSound = () => {
 
   const updateTile = (entity: Entity, oldX: number, oldY : number) => {
     clearTile(oldX, oldY)
-    playMovementSound();
     setTile(entity)
   }
 
@@ -413,20 +326,9 @@ const playGameOverSound = () => {
       console.log(attacker.type + " is attacking " + defender.type + " for " + attacker.attack)
       defender.props.hp = (defender?.props.hp - attacker?.attack);
       defender.props.dmg = true;
-      playAttackSound();
       if (defender.props.hp < 1) {
-        //remove defender
-        if (defender.type !== 'hero') {
-          playEnemyDieSound();
-        }
-        // clearTile(x,y);
-      } else {
-        if (defender.type === 'hero') {
-          playHeroHurtSound();
-        } else {
-          playEnemyHurtSound();
-        }
-      }
+        clearTile(x,y);
+      } 
     } else {
       console.log(attacker.type + " tried to attack [col " + x + ", row" + y + "] but nothing to attack was there");
     }
