@@ -468,7 +468,6 @@ function getRandomArbitrary(min:number, max:number) {
   const attackLeft = () => {  if(hasDoneAction){console.log("Hero can't attack, hes out of actions");return;}var hero = getHero(); attack(hero.col-1, hero.row, hero); hasDoneAction=true;}
   const attackRight = () => {  if(hasDoneAction){console.log("Hero can't attack, hes out of actions");return;}var hero = getHero(); attack(hero.col+1, hero.row, hero); hasDoneAction=true;}
 
-  //LVL 2
   const spinAttack = () => {
       if(hasDoneAction){
         console.log("Hero can't spin attack, hes out of actions");
@@ -484,7 +483,6 @@ function getRandomArbitrary(min:number, max:number) {
       console.log("The hero spin attacked");
   }
 
-    //LVL 3
     const selfHeal = () => {
         if(hasDoneAction){
           console.log("Hero can't heal, hes out of actions");
@@ -525,9 +523,21 @@ function getRandomArbitrary(min:number, max:number) {
           
         </div>
         <div className="Dev-area">
-        <div className="buttonBar">
-            Some tutorial code is running, click to start
-          </div>
+        <div className="rulesBar">
+          <h3>RULES</h3>
+          <ul>
+            <li><strong>Victory:</strong> Reach the queen (move into her).</li>
+            <li><strong>Lose:</strong> Hero has 0 HP.</li>
+          </ul>
+          <p>Your code below will execute once per turn. The turn order is determined by an entity's speed.</p>
+          <p>In most cases, your hero will have the first turn.</p>
+          <p>In your turn, you can only perform:</p>
+          <ul>
+            <li>1 movement action</li>
+            <li>1 attack/interact action</li>
+          </ul>
+          <p>To remember things longer than 1 turn, you should use the <strong>Memory</strong> array.</p>
+        </div>
           <div className="buttonBar" onClick={play}>
             <p unselectable="on" className={'playText ' + (playing ? 'running' : '')}>PLAY</p>
           </div>
