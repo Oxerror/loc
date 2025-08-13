@@ -20,33 +20,24 @@ function App() {
     attack:number,
     props:any
   }
-  const playerName: string = "a";
   const playConsole:any = useRef(null);
   const [mapData,setMapData] = useState(require("./maps/1.json"));
+  const [map, setMap] = useState(1);
 
   const [reload, setReload] = useState(false);
-  const [playing, setPlaying] = useState('false');
-  const [intro, setIntro] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [statsOutput, setStatsOutput] = useState("");
-  const [myXp, setMyXp] = useState(0);
   const [enemiesInRange, setEnemiesInRage]= useState<Entity[]>([]);
 
+
+  const playingRef = useRef(false);
 
   const baseDelay = 400; //1500 too slow
 
   useEffect(() => {
-    var storedXp =  localStorage.getItem('xp');
-    if(storedXp) setMyXp(Number(storedXp));
     updateStatDisplay();
   }, [mapData])
   
-
-  useEffect(() => {
-    if(myXp > 0){
-      localStorage.setItem('xp', myXp+"");
-      updateStatDisplay();
-    }
-  },[myXp])
 
   useEffect(() => {
       turn();
@@ -59,7 +50,7 @@ function App() {
       var hero = getHero();
       if(!hero ||hero.props.hp < 1){
         //gameover
-        setPlaying('false');
+        setPlaying(false);
         alert("GAME OVER. Sending thy hero back to the menu. Copied the used code to clipboard");
         window.location.reload();
       }
@@ -77,15 +68,11 @@ function App() {
     var entities = getMonsters();
     var hero = getHero();
     if(hero) entities.push(hero);
-    var output = "\\\\\\STATS///<br/>MY LEVEL:" + calculateLevel(myXp) + "     MY XP:" + myXp +"<br/><br/>";
+    var output = "";
     entities.reverse().forEach(x =>{ 
       if(x.props.hp < 1){ //kill
         removeFromRange(x);
         clearTile(x.col, x.row)
-        if(x.props.xp){
-          var xpGain = myXp as number + x.props.xp as number;
-          setMyXp(xpGain);
-        }
         return;
       }
       output += x.type + "-"+ x.id+ "&emsp;&emsp;&emsp;&emsp;hp: " + x.props.hp +"&emsp;&emsp;&emsp;&emsp;ATP:"+x.attack+"<br/>"});
@@ -196,14 +183,18 @@ function App() {
     return (mapData.defaults.xsize > x && x >= 0) && (mapData.defaults.ysize > y && y >= 0)
   }
 
+  const isWon = (x: number, y:number) : boolean => {
+    if(["queen"].indexOf(mapData.tiles.rows[y+""][""+x]?.type) >= 0){
+      setMapData(require(`./maps/${map + 1}.json`));
+      setMap(map + 1);
+      setPlaying(false);
+      playingRef.current = false;
+      return true;
+    }
+    return false;
+  } 
 
   const isBlocked = (x: number, y:number) : boolean => {
-    if(["queen","gem"].indexOf(mapData.tiles.rows[y+""][""+x]?.type) >= 0){
-      setMyXp(myXp as number + 300);
-      setPlaying('false');
-      alert("YOU WIN, received XP for completing level. Sending thy hero back to the menu. Copied the used code to clipboard");
-      window.location.reload();
-    }
     return ["monster","rock","water","hero"].indexOf(mapData.tiles.rows[y+""][""+x]?.type) >= 0
   } 
 
@@ -233,6 +224,11 @@ function App() {
     var oldX = entity.col;
     var oldY = entity.row;
     entity.row= oldY- 1;
+
+    if(isWon(entity.col, entity.row)){
+      return true;
+    }
+
     if(!isInbounds(entity.col,entity.row) ||isBlocked(entity.col,entity.row) ){
       console.log(entity.type + " can't go up");
       entity.col = oldX;
@@ -247,6 +243,12 @@ function App() {
     var oldX = entity.col;
     var oldY = entity.row;
     entity.row=  oldY + 1;
+
+    if(isWon(entity.col, entity.row)){
+      return true;
+    }
+
+
     if(!isInbounds(entity.col,entity.row) ||isBlocked(entity.col,entity.row) ){
       console.log(entity.type + " can't go down");
       entity.col = oldX;
@@ -261,6 +263,11 @@ function App() {
     var oldX = entity.col;
     var oldY = entity.row;
     entity.col = oldX - 1;
+
+    if(isWon(entity.col, entity.row)){
+      return true;
+    }
+
     if(!isInbounds(entity.col,entity.row) ||isBlocked(entity.col,entity.row) ){
       console.log(entity.type + " can't go left");
       entity.col = oldX;
@@ -275,6 +282,11 @@ function App() {
     var oldX = entity.col;
     var oldY = entity.row;
     entity.col = oldX + 1;
+
+    if(isWon(entity.col, entity.row)){
+      return true;
+    }
+
     if(!isInbounds(entity.col,entity.row) ||isBlocked(entity.col,entity.row) ){
       console.log(entity.type + " can't go right");
       entity.col = oldX;
@@ -314,12 +326,13 @@ function getRandomArbitrary(min:number, max:number) {
 
 
   const play = () => {
-    if(playing === 'true'){
+    if(playing){
       return;
     }
     console.log("Play is starting...");
-    setupLogger();
-    setPlaying('true');
+    if(map === 1) setupLogger();
+    setPlaying(true);
+    playingRef.current = true;
   }
 
   const allTurns = async (entities: Entity[]) => {
@@ -346,15 +359,13 @@ function getRandomArbitrary(min:number, max:number) {
   }
 
   const  turn = async () => {
-    while (playing==='true' && findQueen()) {
+    while (playingRef.current && findQueen()) {
       var entities = getMonsters();
       entities.push(getHero());
       entities = entities.sort((x,y) => x.initiative - y.initiative);
       await allTurns(entities);
       await delay(entities.length * (baseDelay+ (baseDelay/100)));
-
     }
-
   }
 
 
@@ -415,8 +426,10 @@ function getRandomArbitrary(min:number, max:number) {
 
   const moveHeroUp = () => {
     if (!hasDoneMovement) { 
-      moveUp(getHero()) 
-      hasDoneMovement = true;
+      const moved = moveUp(getHero())
+      console.log("Hero moved up: " + moved);
+      hasDoneMovement = moved;
+      return !moved;
     }else{
       console.log("Hero already moved, cant move again");
     }
@@ -424,24 +437,27 @@ function getRandomArbitrary(min:number, max:number) {
 
   const moveHeroDown = () => {
     if (!hasDoneMovement) { 
-      moveDown(getHero()) 
-      hasDoneMovement = true;
+      const moved = moveDown(getHero()) 
+      hasDoneMovement = moved;
+      return !moved;
     }else{
       console.log("Hero already moved, cant move again");
     }
   }
   const moveHeroLeft = () => {
     if (!hasDoneMovement) { 
-      moveLeft(getHero()) 
-      hasDoneMovement = true;
+      const moved = moveLeft(getHero()) 
+      hasDoneMovement = moved;
+      return !moved;
     }else{
       console.log("Hero already moved, cant move again");
     }
   }
   const moveHeroRight = () => {
     if (!hasDoneMovement) { 
-      moveRight(getHero()) 
-      hasDoneMovement = true;
+      const moved = moveRight(getHero()) 
+      hasDoneMovement = moved;
+      return !moved;
     }else{
       console.log("Hero already moved, cant move again");
     }
@@ -454,7 +470,6 @@ function getRandomArbitrary(min:number, max:number) {
 
   //LVL 2
   const spinAttack = () => {
-    if(calculateLevel(myXp) >= 2){
       if(hasDoneAction){
         console.log("Hero can't spin attack, hes out of actions");
         return;
@@ -467,14 +482,10 @@ function getRandomArbitrary(min:number, max:number) {
       hasDoneAction = false;
       attackRight();
       console.log("The hero spin attacked");
-      return
-    }
-      console.log("COULDNT SPINATTACK, ABILITY HASN'T BEEN UNLOCKED YET");
   }
 
     //LVL 3
     const selfHeal = () => {
-      if(calculateLevel(myXp) >= 3){
         if(hasDoneAction){
           console.log("Hero can't heal, hes out of actions");
           return;
@@ -482,9 +493,6 @@ function getRandomArbitrary(min:number, max:number) {
         getHero().props.hp += 1;
         console.log("The hero healed for 1");
         hasDoneAction = true;
-        return
-      }
-        console.log("COULDNT HEAL, ABILITY HASN'T BEEN UNLOCKED YET");
     }
 
 
@@ -500,14 +508,6 @@ function getRandomArbitrary(min:number, max:number) {
 
   return (
     <div className="Container">
-      {intro ?<div className="intro"><h1 >Choose thy fate alone. Seize it with thine own hands.</h1> 
-      <a className="intro-answer" onClick={() => {setMapData(require("./maps/1.json"));(setIntro(false))}}>LEVEL 1</a>
-      <a className="intro-answer" onClick={() => {setMapData(require("./maps/2.json"));(setIntro(false))}}>LEVEL 2</a>
-      <a className="intro-answer" onClick={() => {setMapData(require("./maps/3.json"));(setIntro(false))}}>LEVEL 3</a>
-      <a className="intro-answer" onClick={() => {setMapData(require("./maps/4.json"));(setIntro(false))}}>LEVEL 4</a>
-      <a className="intro-answer" onClick={() => {setMapData(require("./maps/5.json"));(setIntro(false))}}>LEVEL 5</a>
-      </div>:
-      <>
       <div className="title">
         <h1>Legend of the Coder</h1>
         <h5 className="subtitle">{mapData.name}</h5>
@@ -525,22 +525,14 @@ function getRandomArbitrary(min:number, max:number) {
           
         </div>
         <div className="Dev-area">
-          {/* <Editor
-            className="mainEditor"
-            height="80vh"
-            theme="vs-dark"
-            defaultLanguage="typescript"
-            defaultValue={Tutorial}
-            onMount={handleEditorDidMount}
-          /> */}
-          <div className="buttonBar" onClick={play}>
-            <p unselectable="on" className={'playText ' + (playing === 'true' ? 'running' : '')}>PLAY</p>
+        <div className="buttonBar">
+            Some tutorial code is running, click to start
           </div>
-         
+          <div className="buttonBar" onClick={play}>
+            <p unselectable="on" className={'playText ' + (playing ? 'running' : '')}>PLAY</p>
+          </div>
         </div>
       </div>
-       </>
-}
     </div>
   );
 }
