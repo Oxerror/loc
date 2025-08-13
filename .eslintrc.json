@@ -1,0 +1,10 @@
+
+{
+    "globals": {
+      "getHero": "readonly",
+      "findQueen": "readonly",
+      "moveHeroDown": "readonly",
+      "moveHeroUp": "readonly",
+      "moveHeroRight": "readonly"
+    }
+  }

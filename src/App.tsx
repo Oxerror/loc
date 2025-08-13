@@ -1,12 +1,12 @@
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 import "./App.css";
-import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 import { useRef } from "react";
 import MapGrid from "./MapGrid";
 import { useState } from "react";
 import { useEffect } from "react";
 // @ts-ignore
-import Tutorial from "./tutorial/Tutorial";
+import jsCode from './tutorial/code.js';
+
 
 function App() {
 
@@ -21,7 +21,6 @@ function App() {
     props:any
   }
   const playerName: string = "a";
-  const editorRef:any = useRef(null);
   const playConsole:any = useRef(null);
   const [mapData,setMapData] = useState(require("./maps/1.json"));
 
@@ -34,17 +33,6 @@ function App() {
 
 
   const baseDelay = 400; //1500 too slow
-
-  useEffect(() => {
-    if(editorRef){
-      editorRef?.current?.updateOptions({
-        readOnly: playing === 'true'
-      })
-      console.log("***CODING EDITING HAS BEEN LOCKED*****")
-      turn();
-    }
-
-  }, [playing])
 
   useEffect(() => {
     var storedXp =  localStorage.getItem('xp');
@@ -61,6 +49,10 @@ function App() {
   },[myXp])
 
   useEffect(() => {
+      turn();
+  }, [playing])
+
+  useEffect(() => {
     if(reload){
       setReload( r => !r);
       updateStatDisplay();
@@ -68,7 +60,6 @@ function App() {
       if(!hero ||hero.props.hp < 1){
         //gameover
         setPlaying('false');
-        navigator.clipboard.writeText(editorRef!.current!.getValue())
         alert("GAME OVER. Sending thy hero back to the menu. Copied the used code to clipboard");
         window.location.reload();
       }
@@ -118,31 +109,6 @@ function App() {
 
     }
     console.log("Events will be output here")
-  };
-
-  const handleEditorDidMount = (editor: any, monaco: any) => {
-    monaco.editor.defineTheme("myTheme", {
-      base: "vs-dark",
-      inherit: true,
-      rules: [{ background: "FFFFFF" }],
-      colors: {
-        "editor.foreground": "#FFFFFF",
-        "editor.background": "#000000",
-        "editorCursor.foreground": "#FFFFFF",
-        "editor.lineHighlightBackground": "#000000",
-        "editorLineNumber.foreground": "#FFFFFF",
-        "editor.selectionBackground": "#FFFFFF",
-        "editor.inactiveSelectionBackground": "#000000",
-      },
-    });
-    monaco.editor.setTheme("myTheme");
-
-    editorRef.current = editor;
-    setupLogger();
-  };
-
-  const showValue = () => {
-    alert(editorRef?.current);
   };
 
   const getEntities = (type: string): Entity[] => {
@@ -351,8 +317,8 @@ function getRandomArbitrary(min:number, max:number) {
     if(playing === 'true'){
       return;
     }
-    navigator.clipboard.writeText(editorRef!.current!.getValue());
     console.log("Play is starting...");
+    setupLogger();
     setPlaying('true');
   }
 
@@ -528,9 +494,8 @@ function getRandomArbitrary(min:number, max:number) {
     const heroTurn = () => {
       hasDoneMovement = false;
       hasDoneAction = false;
-      var heroCode = editorRef!.current!.getValue();
-      var re = /mapData/gi;
-      eval(heroCode.replace(re, 'no cheeto my mateo').split("END INTRO")[1]);
+     
+      eval(jsCode);
     }
 
   return (
@@ -560,14 +525,14 @@ function getRandomArbitrary(min:number, max:number) {
           
         </div>
         <div className="Dev-area">
-          <Editor
+          {/* <Editor
             className="mainEditor"
             height="80vh"
             theme="vs-dark"
             defaultLanguage="typescript"
             defaultValue={Tutorial}
             onMount={handleEditorDidMount}
-          />
+          /> */}
           <div className="buttonBar" onClick={play}>
             <p unselectable="on" className={'playText ' + (playing === 'true' ? 'running' : '')}>PLAY</p>
           </div>
