@@ -20,10 +20,10 @@
 }
 
 .Container{
- /* background-color: 	#1e1e1e;*/
   max-width: 100vw;
   height: 100vh;
-  margin-top: -3vh;
+  display: grid;
+  grid-template-rows: auto  minmax(0, 1fr);
 }
 
 .intro{
@@ -36,82 +36,37 @@
     margin-top: 25%;
 }
 
-.intro-answer{
-  cursor: pointer;
-  padding-right: 2em;
-}
-
 .App {
   animation-name: app-opening;
   animation-delay: 4s;
   animation-duration: 4s;
   animation-fill-mode: forwards;
   opacity: 0;
-  width: 98vw;
-  display:flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  height: 100vh;
+  height: 100%; 
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto  minmax(0, 1fr);
+  grid-template-columns: 480px  minmax(0, 1fr);
 }
 
 .title{
   animation-name: opening;
   animation-duration: 4s;
-  width: 98vw;
   text-align: center;
   font-family: Hylian;
   background: black;
   color: white;
-  padding-top: 2vh;
+  margin-top: -1.5em;
 }
 
 .subtitle{
   margin-top: -1em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
 .Play-grid{
-  width: 60%;
-  height:89vh;
   border: solid white;
   overflow:auto;
   display: flex;
-  flex-direction: column;
 }
 
 .Dev-area{
@@ -126,7 +81,7 @@
 }
 
 .buttonBar{
-  height: 11%;
+  height: 100%;
   border: solid white;
   color: white;
   background: black;
@@ -134,11 +89,9 @@
 }
 
 .rulesBar{
-  height: 400px;
-  border: solid white;
   color: white;
   background: black;
-  padding: 20px;
+  padding-left: 20px;
 }
 
 .playText {
@@ -161,45 +114,32 @@ user-select: none; /* Standard */
   display: flex;
   flex-direction: row;
   overflow: auto;
-  max-height: 30vh;
 }
 
 .console{
   width: 50%;
-  margin-block: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   font-size: 80%;
-    overflow: auto;
-    display: flex;
-   /* flex-direction: column-reverse; more consistent with js solution*/
+  overflow: auto;
+  display: flex;
 }
 
 
 .stats{
-  
     margin-block: auto;
     font-family: Hylian;
     color: white;
     font-size: 85%;
       overflow: auto;
-      display: flex;
-     /* flex-direction: column-reverse; more consistent with js solution*/
-  
+      display: flex; 
 }
 
 
-.cell{/*
-  height: 5vh;
-  width: 5vw;
- /* min-width: 4em;
-  min-height: 4em;*/
-  min-height: 3.5vh;
-  min-width: 2.5vw;
-  height: 5.5vh;
-  width: 2.5vw;
-  border: 0.1em solid black;
-  flex:1;
+.cell{
+  height: 40px;
+  width: 40px;
+  border: 1px solid black;
   background-color: #E3CDA6;
 }
 
@@ -215,22 +155,18 @@ user-select: none; /* Standard */
 
 .rock{
   content:url(sprites/rock.png);
-  /*background-color: grey;*/
 }
 
 .hero{
   content:url(sprites/hero.png);
-  /*background-color: greenyellow;*/
 }
 
 .monster{
   content:url(sprites/monster.png);
-  /*background-color: red;*/
 }
 
 .queen{
   content:url(sprites/queen.png);
-  /*background-color: green;*/
 }
 
 .dmg{
