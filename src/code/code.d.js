@@ -97,6 +97,42 @@ const attackLeft = () => { /* hero attacks */ };
 const attackRight = () => { /* hero attacks */ };
 
 /**
+ * Check if the queen is above the hero.
+ * @returns {boolean} True if the queen is above the hero.
+ */
+const isQueenAboveMe = () => { /* queen position is above me */ };
+
+/**
+ * Check if the queen is below the hero.
+ * @returns {boolean} True if the queen is below the hero.
+ */
+const isQueenBelowMe = () => { /* queen position is below me */ };
+
+/**
+ * Check if the queen is to the left of the hero.
+ * @returns {boolean} True if the queen is to the left of the hero.
+ */
+const isQueenLeftOfMe = () => { /* queen position is left of me */ };
+
+/**
+ * Check if the queen is to the right of the hero.
+ * @returns {boolean} True if the queen is to the right of the hero.
+ */
+const isQueenRightOfMe = () => { /* queen position is right of me */ };
+
+/**
+ * Check if the queen is in the same row as the hero.
+ * @returns {boolean} True if the queen is in the same row as the hero.
+ */
+const isQueenInSameRow = () => { /* queen position is in the same row as me */ };
+
+/**
+ * Check if the queen is in the same column as the hero.
+ * @returns {boolean} True if the queen is in the same column as the hero.
+ */
+const isQueenInSameColumn = () => { /* queen position is in the same column as me */ };
+
+/**
  * Memory array to save information across multiple turns.
  * @type {any[]}
  */

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 // @ts-ignore
 import jsCode from "./code/code.js";
+import Editor from "./Editor";
 
 let loggerSetup = false;
 
@@ -39,6 +40,15 @@ function App() {
   const playingRef = useRef(false);
 
   const baseDelay = 400; //1500 too slow
+
+  const restart = () => {
+    clearRequireCache();
+    setCurrentCode(jsCode);
+    setMapData(require("./maps/1.json"));
+    setMap(1);
+    setPlaying(false);
+    playingRef.current = false;
+  };
 
   useEffect(() => {
     updateStatDisplay();
@@ -102,6 +112,11 @@ function App() {
     loggerSetup = true;
     var old = console.log;
     console.log = function (message) {
+      if (message.startsWith("[HMR]")) {
+        restart();
+        return;
+      }
+
       if (playConsole) {
         (playConsole.current as HTMLParagraphElement).scrollTop = 0;
         if (typeof message == "object") {
@@ -186,6 +201,13 @@ function App() {
     return entity;
   };
 
+  const nextLevel = () => {
+    setMapData(require(`./maps/${map + 1}.json`));
+    setMap(map + 1);
+    setPlaying(false);
+    playingRef.current = false;
+  };
+
   const getMonsters = (): Entity[] => {
     return getEntities("monster");
   };
@@ -201,6 +223,13 @@ function App() {
   const getHero = (): Entity => {
     return getEntities("hero")[0];
   };
+
+  const isQueenAboveMe = () => getHero().row > findQueen().row;
+  const isQueenBelowMe = () => getHero().row < findQueen().row;
+  const isQueenLeftOfMe = () => getHero().col > findQueen().col;
+  const isQueenRightOfMe = () => getHero().col < findQueen().col;
+  const isQueenInSameRow = () => getHero().row === findQueen().row;
+  const isQueenInSameColumn = () => getHero().col === findQueen().col;
 
   const isInbounds = (x: number, y: number): boolean => {
     return (
@@ -396,16 +425,7 @@ function App() {
 
   const allTurns = async (entities: Entity[]) => {
     if (!playing) return;
-    if (currentCode !== jsCode) {
-      clearRequireCache();
-      setCurrentCode(jsCode);
-      setMapData(require("./maps/1.json"));
-      setMap(1);
-      setPlaying(false);
-      playingRef.current = false;
-      return;
-    }
-    
+
     var index = 0;
 
     const entityTurn = async (entity: Entity) => {
@@ -611,6 +631,8 @@ function App() {
 
     eval(jsCode);
   };
+
+  // return <Editor />
 
   return (
     <div className="Container">
