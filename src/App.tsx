@@ -5,7 +5,15 @@ import MapGrid from "./MapGrid";
 import { useState } from "react";
 import { useEffect } from "react";
 // @ts-ignore
-import jsCode from "./tutorial/code.js";
+import jsCode from "./code/code.js";
+
+let loggerSetup = false;
+
+const clearRequireCache = () => {
+  Object.keys(require.cache).forEach((key) => {
+    delete require.cache[key];
+  });
+};
 
 function App() {
   type Entity = {
@@ -26,6 +34,7 @@ function App() {
   const [playing, setPlaying] = useState(false);
   const [statsOutput, setStatsOutput] = useState("");
   const [enemiesInRange, setEnemiesInRage] = useState<Entity[]>([]);
+  const [currentCode, setCurrentCode] = useState(jsCode);
 
   const playingRef = useRef(false);
 
@@ -38,6 +47,10 @@ function App() {
   useEffect(() => {
     turn();
   }, [playing]);
+
+  useEffect(() => {
+    Memory.length = 0;
+  }, [map]);
 
   useEffect(() => {
     if (reload) {
@@ -86,7 +99,7 @@ function App() {
   };
 
   const setupLogger = () => {
-    console.log(playConsole);
+    loggerSetup = true;
     var old = console.log;
     console.log = function (message) {
       if (playConsole) {
@@ -374,13 +387,25 @@ function App() {
     if (playing) {
       return;
     }
-    if (map === 1) setupLogger();
+    if (!loggerSetup) {
+      setupLogger();
+    }
     setPlaying(true);
     playingRef.current = true;
   };
 
   const allTurns = async (entities: Entity[]) => {
     if (!playing) return;
+    if (currentCode !== jsCode) {
+      clearRequireCache();
+      setCurrentCode(jsCode);
+      setMapData(require("./maps/1.json"));
+      setMap(1);
+      setPlaying(false);
+      playingRef.current = false;
+      return;
+    }
+    
     var index = 0;
 
     const entityTurn = async (entity: Entity) => {

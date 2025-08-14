@@ -378,7 +378,7 @@ module.exports = function (webpackEnv) {
             },
             {
               test: jsRegex,
-              include: path.resolve(__dirname, '../src/tutorial'), // Ensure it matches the correct directory
+              include: path.resolve(__dirname, '../src/code'), // Ensure it matches the correct directory
               type: 'asset/source',
             },
             {
@@ -731,7 +731,7 @@ module.exports = function (webpackEnv) {
       !disableESLintPlugin &&
         new ESLintPlugin({
           // Plugin options
-          extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+          extensions: ['mjs', 'jsx'],
           formatter: require.resolve('react-dev-utils/eslintFormatter'),
           eslintPath: require.resolve('eslint'),
           failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
