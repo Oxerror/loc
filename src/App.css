@@ -9,31 +9,47 @@
   src: url("fonts/HyliaSerifBeta-Regular.otf") format("opentype");
 }
 
-@keyframes opening{
-  0% {opacity: 0;transform: scale(10); }
-  100%{opacity: 100%;transform: scale(1); }
+@keyframes opening {
+  0% {
+    opacity: 0;
+    transform: scale(10);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
 }
 
-@keyframes app-opening{
-  0% {opacity: 0;}
-  100%{opacity: 100%; }
+@keyframes app-opening {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
 
-.Container{
+html, body {
+  overflow: hidden; /* Prevent scrollbars */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.Container {
   max-width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto  minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
-.intro{
+.intro {
   font-family: Hylian;
   color: white;
   width: 98vw;
   height: 100vh;
   text-align: center;
-    margin: auto;
-    margin-top: 25%;
+  margin: auto;
+  margin-top: 25%;
 }
 
 .App {
@@ -42,14 +58,14 @@
   animation-duration: 4s;
   animation-fill-mode: forwards;
   opacity: 0;
-  height: 100%; 
+  height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: auto  minmax(0, 1fr);
-  grid-template-columns: 480px  minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: 480px minmax(0, 1fr);
 }
 
-.title{
+.title {
   animation-name: opening;
   animation-duration: 4s;
   text-align: center;
@@ -59,36 +75,34 @@
   margin-top: -1.5em;
 }
 
-.subtitle{
+.subtitle {
   margin-top: -1em;
 }
 
-.Play-grid{
+.Play-grid {
   border: solid white;
-  overflow:auto;
+  overflow: auto;
   display: flex;
 }
 
-.Dev-area{
+.Dev-area {
   width: 40%;
   height: 90%;
   flex: flex-grow;
-  display:block;
+  display: block;
 }
 
-.mainEditor{
-
+.mainEditor {
 }
 
-.buttonBar{
-  height: 100%;
+.buttonBar {
   border: solid white;
   color: white;
   background: black;
   cursor: pointer;
 }
 
-.rulesBar{
+.rulesBar {
   color: white;
   background: black;
   padding-left: 20px;
@@ -98,88 +112,85 @@
   margin-block: auto;
   font-size: 300%;
   font-family: Hylian;
-  -webkit-user-select: none; /* Safari */        
--moz-user-select: none; /* Firefox */
--ms-user-select: none; /* IE10+/Edge */
-user-select: none; /* Standard */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
-.running{
-  color:red;
+.running {
+  color: red;
   cursor: not-allowed;
 }
 
-
-.outputs{
+.outputs {
   display: flex;
   flex-direction: row;
   overflow: auto;
 }
 
-.console{
+.console {
   width: 50%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   font-size: 80%;
   overflow: auto;
   display: flex;
 }
 
-
-.stats{
-    margin-block: auto;
-    font-family: Hylian;
-    color: white;
-    font-size: 85%;
-      overflow: auto;
-      display: flex; 
+.stats {
+  margin-block: auto;
+  font-family: Hylian;
+  color: white;
+  font-size: 85%;
+  overflow: auto;
+  display: flex;
 }
 
-
-.cell{
+.cell {
   height: 40px;
   width: 40px;
   border: 1px solid black;
-  background-color: #E3CDA6;
+  background-color: #e3cda6;
 }
 
-.bg-tile{
-  content:url(sprites/ground.png);
+.bg-tile {
+  content: url(sprites/ground.png);
   /*background-color: #1E38EB;*/
 }
 
-.water{
-  content:url(sprites/water.png);
-  background-color: #1E38EB;
+.water {
+  content: url(sprites/water.png);
+  background-color: #1e38eb;
 }
 
-.rock{
-  content:url(sprites/rock.png);
+.rock {
+  content: url(sprites/rock.png);
 }
 
-.hero{
-  content:url(sprites/hero.png);
+.hero {
+  content: url(sprites/hero.png);
 }
 
-.monster{
-  content:url(sprites/monster.png);
+.monster {
+  content: url(sprites/monster.png);
 }
 
-.queen{
-  content:url(sprites/queen.png);
+.queen {
+  content: url(sprites/queen.png);
 }
 
-.dmg{
-    filter: sepia(13%) saturate(250%) brightness(80%) hue-rotate(307deg)
+.dmg {
+  filter: sepia(13%) saturate(250%) brightness(80%) hue-rotate(307deg);
 }
 
-.row{
+.row {
   flex-wrap: nowrap;
   flex-direction: row;
   display: flex;
 }
 
-.mapContainer{
+.mapContainer {
   flex-wrap: nowrap;
   flex-direction: column;
   display: flex;

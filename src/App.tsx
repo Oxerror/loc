@@ -47,9 +47,7 @@ function App() {
       if (!hero || hero.props.hp < 1) {
         //gameover
         setPlaying(false);
-        alert(
-          "GAME OVER. Sending thy hero back to the menu. Copied the used code to clipboard"
-        );
+        alert("GAME OVER.");
         window.location.reload();
       }
     }
@@ -376,7 +374,6 @@ function App() {
     if (playing) {
       return;
     }
-    console.log("Play is starting...");
     if (map === 1) setupLogger();
     setPlaying(true);
     playingRef.current = true;
@@ -484,7 +481,6 @@ function App() {
   const moveHeroUp = () => {
     if (!hasDoneMovement) {
       const moved = moveUp(getHero());
-      console.log("Hero moved up: " + moved);
       hasDoneMovement = moved;
       return !moved;
     } else {
