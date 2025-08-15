@@ -7,6 +7,7 @@ import { useEffect } from "react";
 // @ts-ignore
 import jsCode from "./code/code.js";
 import Editor from "./Editor";
+import InfoArea from "./InfoArea";
 
 let loggerSetup = false;
 
@@ -35,7 +36,7 @@ function App() {
   const [playing, setPlaying] = useState(false);
   const [statsOutput, setStatsOutput] = useState("");
   const [enemiesInRange, setEnemiesInRage] = useState<Entity[]>([]);
-  const [currentCode, setCurrentCode] = useState(jsCode);
+  const [activeTab, setActiveTab] = useState<"RULES" | "HELP">("RULES");
 
   const playingRef = useRef(false);
 
@@ -43,7 +44,6 @@ function App() {
 
   const restart = () => {
     clearRequireCache();
-    setCurrentCode(jsCode);
     setMapData(require("./maps/1.json"));
     setMap(1);
     setPlaying(false);
@@ -649,42 +649,53 @@ function App() {
           )}
         </div>
         <div className="rulesBar">
-          <h3>RULES</h3>
-          <ul>
-            <li>
-              <strong>Victory:</strong> Reach the queen (move into her).
-            </li>
-            <li>
-              <strong>Lose:</strong> Hero has 0 HP.
-            </li>
-          </ul>
-          <p>
-            Your code will execute once per turn. The turn order is determined
-            by an entity's speed.
-          </p>
-          <p>In most cases, your hero will have the first turn.</p>
-          <p>In your turn, you can only perform:</p>
-          <ul>
-            <li>1 movement action</li>
-            <li>1 attack/interact action</li>
-          </ul>
-          <p>
-            To remember things longer than 1 turn, you should use the{" "}
-            <strong>Memory</strong> array.
-          </p>
+          <div className="devHeader">
+            <h3 onClick={() => setActiveTab("RULES")} style={{textDecoration: activeTab === "RULES" ? "underLine" : undefined}}>RULES</h3>
+            <h3 onClick={() => setActiveTab("HELP")} style={{textDecoration: activeTab === "HELP" ? "underLine" : undefined}}>HELP</h3>
+          </div>
+          <div>
+          {activeTab === "RULES" ? (
+            <>
+              <ul>
+                <li>
+                  <strong>Victory:</strong> Reach the queen (move into her).
+                </li>
+                <li>
+                  <strong>Lose:</strong> Hero has 0 HP.
+                </li>
+              </ul>
+              <p>
+                Your code will execute once per turn. The turn order is
+                determined by an entity's speed.
+              </p>
+              <p>In most cases, your hero will have the first turn.</p>
+              <p>In your turn, you can only perform:</p>
+              <ul>
+                <li>1 movement action</li>
+                <li>1 attack/interact action</li>
+              </ul>
+              <p>
+                To remember things longer than 1 turn, you should use the{" "}
+                <strong>Memory</strong> array.
+              </p>
+            </>
+          ) : (
+            <InfoArea />
+          )}
+          </div>
         </div>
         <div className="outputs">
           <p className="console" ref={playConsole}></p>
           <p
             className="stats"
             dangerouslySetInnerHTML={{ __html: statsOutput }}
-          ></p>
+            ></p>
         </div>
         <div className="buttonBar" onClick={play}>
           <p
             unselectable="on"
             className={"playText " + (playing ? "running" : "")}
-          >
+            >
             PLAY
           </p>
         </div>

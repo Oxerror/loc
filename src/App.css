@@ -156,20 +156,23 @@ html, body {
 
 .bg-tile {
   content: url(sprites/ground.png);
-  /*background-color: #1E38EB;*/
+  overflow: hidden;
 }
 
 .water {
   content: url(sprites/water.png);
-  background-color: #1e38eb;
+  background-color: #1e38eb;  
+  overflow: hidden;
 }
 
 .rock {
   content: url(sprites/rock.png);
+  overflow: hidden;
 }
 
 .hero {
   content: url(sprites/hero.png);
+  overflow: hidden;
 }
 
 .monster {
@@ -179,6 +182,7 @@ html, body {
 
 .queen {
   content: url(sprites/queen.png);
+  overflow: hidden;
 }
 
 .dmg {
@@ -197,4 +201,18 @@ html, body {
   display: flex;
   max-height: 70vh;
   overflow: auto;
+}
+
+.devHeader {
+  display: flex;
+  flex-direction: row;;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+
+.devHeader h3 {
+  cursor: pointer;
 }
