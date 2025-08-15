@@ -44,7 +44,7 @@ function App() {
 
   const restart = () => {
     clearRequireCache();
-    setMapData(require("./maps/1.json"));
+    // setMapData(require("./maps/1.json"));
     setMap(1);
     setPlaying(false);
     playingRef.current = false;
@@ -60,6 +60,22 @@ function App() {
 
   useEffect(() => {
     Memory.length = 0;
+
+    fetch(
+      `https://raw.githubusercontent.com/Oxerror/loc/master/src/maps/${map}.json`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMapData(data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   }, [map]);
 
   useEffect(() => {
@@ -202,7 +218,7 @@ function App() {
   };
 
   const nextLevel = () => {
-    setMapData(require(`./maps/${map + 1}.json`));
+    // setMapData(require(`./maps/${map + 1}.json`));
     setMap(map + 1);
     setPlaying(false);
     playingRef.current = false;
@@ -242,7 +258,7 @@ function App() {
 
   const isWon = (x: number, y: number): boolean => {
     if (["queen"].indexOf(mapData.tiles.rows[y + ""]["" + x]?.type) >= 0) {
-      setMapData(require(`./maps/${map + 1}.json`));
+      // setMapData(require(`./maps/${map + 1}.json`));
       setMap(map + 1);
       setPlaying(false);
       playingRef.current = false;
@@ -650,38 +666,52 @@ function App() {
         </div>
         <div className="rulesBar">
           <div className="devHeader">
-            <h3 onClick={() => setActiveTab("RULES")} style={{textDecoration: activeTab === "RULES" ? "underLine" : undefined}}>RULES</h3>
-            <h3 onClick={() => setActiveTab("HELP")} style={{textDecoration: activeTab === "HELP" ? "underLine" : undefined}}>HELP</h3>
+            <h3
+              onClick={() => setActiveTab("RULES")}
+              style={{
+                textDecoration: activeTab === "RULES" ? "underLine" : undefined,
+              }}
+            >
+              RULES
+            </h3>
+            <h3
+              onClick={() => setActiveTab("HELP")}
+              style={{
+                textDecoration: activeTab === "HELP" ? "underLine" : undefined,
+              }}
+            >
+              HELP
+            </h3>
           </div>
           <div>
-          {activeTab === "RULES" ? (
-            <>
-              <ul>
-                <li>
-                  <strong>Victory:</strong> Reach the queen (move into her).
-                </li>
-                <li>
-                  <strong>Lose:</strong> Hero has 0 HP.
-                </li>
-              </ul>
-              <p>
-                Your code will execute once per turn. The turn order is
-                determined by an entity's speed.
-              </p>
-              <p>In most cases, your hero will have the first turn.</p>
-              <p>In your turn, you can only perform:</p>
-              <ul>
-                <li>1 movement action</li>
-                <li>1 attack/interact action</li>
-              </ul>
-              <p>
-                To remember things longer than 1 turn, you should use the{" "}
-                <strong>Memory</strong> array.
-              </p>
-            </>
-          ) : (
-            <InfoArea />
-          )}
+            {activeTab === "RULES" ? (
+              <>
+                <ul>
+                  <li>
+                    <strong>Victory:</strong> Reach the queen (move into her).
+                  </li>
+                  <li>
+                    <strong>Lose:</strong> Hero has 0 HP.
+                  </li>
+                </ul>
+                <p>
+                  Your code will execute once per turn. The turn order is
+                  determined by an entity's speed.
+                </p>
+                <p>In most cases, your hero will have the first turn.</p>
+                <p>In your turn, you can only perform:</p>
+                <ul>
+                  <li>1 movement action</li>
+                  <li>1 attack/interact action</li>
+                </ul>
+                <p>
+                  To remember things longer than 1 turn, you should use the{" "}
+                  <strong>Memory</strong> array.
+                </p>
+              </>
+            ) : (
+              <InfoArea />
+            )}
           </div>
         </div>
         <div className="outputs">
@@ -689,13 +719,13 @@ function App() {
           <p
             className="stats"
             dangerouslySetInnerHTML={{ __html: statsOutput }}
-            ></p>
+          ></p>
         </div>
         <div className="buttonBar" onClick={play}>
           <p
             unselectable="on"
             className={"playText " + (playing ? "running" : "")}
-            >
+          >
             PLAY
           </p>
         </div>
