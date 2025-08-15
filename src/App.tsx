@@ -527,7 +527,7 @@ function App() {
     if (!hasDoneMovement) {
       const moved = moveUp(getHero());
       hasDoneMovement = moved;
-      return !moved;
+      return moved;
     } else {
       console.log("Hero already moved, cant move again");
     }
@@ -537,7 +537,7 @@ function App() {
     if (!hasDoneMovement) {
       const moved = moveDown(getHero());
       hasDoneMovement = moved;
-      return !moved;
+      return moved;
     } else {
       console.log("Hero already moved, cant move again");
     }
@@ -546,7 +546,7 @@ function App() {
     if (!hasDoneMovement) {
       const moved = moveLeft(getHero());
       hasDoneMovement = moved;
-      return !moved;
+      return moved;
     } else {
       console.log("Hero already moved, cant move again");
     }
@@ -555,7 +555,7 @@ function App() {
     if (!hasDoneMovement) {
       const moved = moveRight(getHero());
       hasDoneMovement = moved;
-      return !moved;
+      return moved;
     } else {
       console.log("Hero already moved, cant move again");
     }
