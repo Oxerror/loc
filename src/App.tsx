@@ -45,7 +45,6 @@ function App() {
 
   const restart = () => {
     clearRequireCache();
-    // setMapData(require("./maps/1.json"));
     setMap(1);
     setPlaying(false);
     playingRef.current = false;
@@ -79,10 +78,18 @@ function App() {
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
-          setMapData(require(`./maps/${map}.json`));
+          try {
+            setMapData(require(`./maps/${map}.json`));
+          } catch (e) {
+            alert("All levels cleared");
+          }
         });
     } else {
-      setMapData(require(`./maps/${map}.json`));
+      try {
+        setMapData(require(`./maps/${map}.json`));
+      } catch (e) {
+        alert("All levels cleared");
+      }
     }
   }, [map]);
 
