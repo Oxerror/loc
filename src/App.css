@@ -80,7 +80,6 @@ html, body {
 }
 
 .Play-grid {
-  border: solid white;
   overflow: auto;
   display: flex;
 }
