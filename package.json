@@ -69,6 +69,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start:remote": "powershell -Command \"$env:REACT_APP_REMOTE='true'; node scripts/start.js\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },

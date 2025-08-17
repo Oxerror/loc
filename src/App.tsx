@@ -10,6 +10,7 @@ import Editor from "./Editor";
 import InfoArea from "./InfoArea";
 
 let loggerSetup = false;
+const isRemote = process.env.REACT_APP_REMOTE === "true";
 
 const clearRequireCache = () => {
   Object.keys(require.cache).forEach((key) => {
@@ -61,21 +62,28 @@ function App() {
   useEffect(() => {
     Memory.length = 0;
 
-    fetch(
-      `https://raw.githubusercontent.com/Oxerror/loc/master/src/maps/${map}.json`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setMapData(data);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
+    if (isRemote) {
+      fetch(
+        `https://raw.githubusercontent.com/Oxerror/loc/master/src/maps/${map}.json`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setMapData(data);
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+          setMapData(require(`./maps/${map}.json`));
+        });
+    } else {
+      setMapData(require(`./maps/${map}.json`));
+    }
   }, [map]);
 
   useEffect(() => {
