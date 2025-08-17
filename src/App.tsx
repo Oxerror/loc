@@ -736,6 +736,69 @@ function App() {
             dangerouslySetInnerHTML={{ __html: statsOutput }}
           ></p>
         </div>
+        <div className="rulesBar">
+          <table>
+            <thead>
+              <tr>
+                <th>Concept</th>
+                <th>Description</th>
+                <th>Example (JavaScript)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Function</td>
+                <td>Block of code that performs a task</td>
+                <td>
+                  <code>{'function greet() { console.log("Hello"); }'}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Calling a Function</td>
+                <td>Execute the function</td>
+                <td>
+                  <code>{"greet();"}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>If Statement</td>
+                <td>Conditional execution of code</td>
+                <td>
+                  <code>{'if (x > 0) { console.log("Positive"); }'}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Variable</td>
+                <td>Store data</td>
+                <td>
+                  <code>{"let age = 25;"}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Loop (for)</td>
+                <td>Repeat code multiple times</td>
+                <td>
+                  <code>{"for(let i=0; i<5; i++) { ... }"}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Return Value</td>
+                <td>Output from a function</td>
+                <td>
+                  <code>{"function add(a, b) { return a + b; }"}</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Array</td>
+                <td>Stores a list of values</td>
+                <td>
+                  <code>{"let arr = [1, 2, 3]; arr.push(4);"}</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div />
         <div className="buttonBar" onClick={play}>
           <p
             unselectable="on"
