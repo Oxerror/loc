@@ -1,5 +1,5 @@
 {
-  "name": "Level 9",
+  "name": "Level 17",
   "defaults": {
     "types": "water,ground,rock,monster,queen",
     "startHealth": 10,
