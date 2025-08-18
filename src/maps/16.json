@@ -1,0 +1,73 @@
+{
+  "name": "Level 16",
+  "defaults": {
+    "types": "water,ground,rock,monster,queen",
+    "startHealth": 10,
+    "ysize": 10,
+    "xsize": 12
+  },
+  "tiles": {
+    "rows": {
+      "0": {},
+      "1": {
+        "1": {
+          "id": 666,
+          "type": "hero",
+          "movement": 1,
+          "hp": 10,
+          "initiative": 2
+        },
+        "2": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        },
+        "6": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        }
+      },
+      "2": {},
+      "3": {},
+      "4": {
+        "10": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        }
+      },
+      "5": {},
+      "6": {
+        "1": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        },
+        "7": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        }
+      },
+      "7": {},
+      "8": { "10": { "id": 1, "type": "queen" } },
+      "9": {}
+    }
+  }
+}

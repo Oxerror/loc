@@ -1,5 +1,5 @@
 {
-  "name": "Level 12",
+  "name": "Level 14",
   "defaults": {
     "types": "water,ground,rock,monster,queen",
     "startHealth": 10,
@@ -12,18 +12,7 @@
       "1": {},
       "2": {},
       "3": {},
-      "4": {},
-      "5": {
-        "5": {
-          "id": 666,
-          "type": "hero",
-          "movement": 1,
-          "hp": 10,
-          "initiative": 2
-        }
-      },
-      "6": {},
-      "7": {
+      "4": {
         "5": {
           "id": 11,
           "type": "monster",
@@ -33,6 +22,42 @@
           "xp": 100
         }
       },
+      "5": {
+        "4": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        },
+        "5": {
+          "id": 666,
+          "type": "hero",
+          "movement": 1,
+          "hp": 10,
+          "initiative": 2
+        },
+        "6": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        }
+      },
+      "6": {
+        "5": {
+          "id": 11,
+          "type": "monster",
+          "movement": 1,
+          "hp": 2,
+          "initiative": 3,
+          "xp": 100
+        }
+      },
+      "7": {},
       "8": { "5": { "id": 1, "type": "queen" } },
       "9": {}
     }

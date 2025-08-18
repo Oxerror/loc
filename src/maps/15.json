@@ -1,5 +1,5 @@
 {
-  "name": "Level 10",
+  "name": "Level 15",
   "defaults": {
     "types": "water,ground,rock,monster,queen",
     "startHealth": 10,
@@ -10,17 +10,8 @@
     "rows": {
       "0": {},
       "1": {},
-      "2": { "5": { "id": 1, "type": "queen" } },
-      "3": {
-        "5": {
-          "id": 11,
-          "type": "monster",
-          "movement": 1,
-          "hp": 2,
-          "initiative": 3,
-          "xp": 100
-        }
-      },
+      "2": {},
+      "3": {},
       "4": {},
       "5": {
         "5": {
@@ -32,8 +23,12 @@
         }
       },
       "6": {},
-      "7": {},
-      "8": {},
+      "7": {
+        "4": { "id": 2, "type": "rock" },
+        "5": { "id": 2, "type": "rock" },
+        "6": { "id": 2, "type": "rock" }
+      },
+      "8": { "5": { "id": 1, "type": "queen" } },
       "9": {}
     }
   }
