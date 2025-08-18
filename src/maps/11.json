@@ -1,5 +1,5 @@
 {
-  "name": "Level 10",
+  "name": "Level 11",
   "defaults": {
     "types": "water,ground,rock,monster,queen",
     "startHealth": 10,
@@ -10,19 +10,19 @@
     "rows": {
       "0": {},
       "1": {},
-      "2": { "5": { "id": 1, "type": "queen" } },
-      "3": {
-        "5": {
+      "2": {},
+      "3": {},
+      "4": {},
+      "5": {
+        "2": { "id": 1, "type": "queen" },
+        "3": {
           "id": 11,
           "type": "monster",
           "movement": 1,
           "hp": 2,
           "initiative": 3,
           "xp": 100
-        }
-      },
-      "4": {},
-      "5": {
+        },
         "5": {
           "id": 666,
           "type": "hero",
