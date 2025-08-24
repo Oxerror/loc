@@ -405,6 +405,8 @@ function App() {
   };
 
   const attack = (x: number, y: number, attacker: Entity) => {
+    if (isInbounds(x, y) === false) return;
+
     var defender = getEntityOnTile(x, y);
     if (defender && (defender.type === "monster" || defender.type === "hero")) {
       console.log(
