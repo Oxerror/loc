@@ -794,7 +794,7 @@ function App() {
                 <td>Array</td>
                 <td>Stores a list of values</td>
                 <td>
-                  <code>{"let arr = [1, 2, 3]; arr.push(4);"}</code>
+                  <code>{"arr[0] = \"left\"; arr[0];"}</code>
                 </td>
               </tr>
             </tbody>
