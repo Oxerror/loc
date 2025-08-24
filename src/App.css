@@ -53,11 +53,6 @@ html, body {
 }
 
 .App {
-  animation-name: app-opening;
-  animation-delay: 4s;
-  animation-duration: 4s;
-  animation-fill-mode: forwards;
-  opacity: 0;
   height: 100%;
   width: 100%;
   display: grid;
@@ -66,8 +61,6 @@ html, body {
 }
 
 .title {
-  animation-name: opening;
-  animation-duration: 4s;
   text-align: center;
   font-family: Hylian;
   background: black;
